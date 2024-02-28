@@ -8,6 +8,7 @@ import router from '../routes';
 
 
 const app = express();
+import { PORT } from '../config';
 
 // may or may not need these
 app.use(cors({
@@ -22,7 +23,12 @@ app.use('/api/v1/students', router);
 
 // const server = http.createServer(app);
 
+// locally
+// app.listen(8080, () => {
+//   console.log('Server running on http://localhost:8080/');
+// });
 
-app.listen(8080, () => {
+// vercel
+app.listen(process.env.PORT, () => {
   console.log('Server running on http://localhost:8080/');
 });
