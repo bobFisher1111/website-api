@@ -29,6 +29,6 @@ app.use('/api/v1/students', router);
 // });
 
 // vercel
-app.listen(process.env.PORT, () => {
+app.listen(3000, () => {
   console.log('Server running on http://localhost:8080/');
 });
