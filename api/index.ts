@@ -1,20 +1,23 @@
-// import express from 'express';
-// import http from 'http';
-// import bodyParser from 'body-parser';
-// import cookieParser from 'cookie-parser';
-// import compression from 'compression';
-// import cors from 'cors';
 const express = require("express");
+const cors = require('cors');
 import router from '../src/routes';
 
 
 const app = express();
 import { PORT } from '../src/config';
 
+// import express from 'express';
+// import http from 'http';
+// import bodyParser from 'body-parser';
+// import cookieParser from 'cookie-parser';
+// import compression from 'compression';
+// import cors from 'cors';
+
 // may or may not need these
 // app.use(cors({
 //   credentials: true,
 // }));
+app.use(cors());
 // app.use(compression());
 // app.use(cookieParser());
 // app.use(bodyParser.json());
