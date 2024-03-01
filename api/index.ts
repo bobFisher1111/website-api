@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require('cors');
+// const bodyParser = require('body-parser');
 import router from '../src/routes';
 
 
@@ -34,5 +35,5 @@ app.use('/api/v1/students', router);
 
 // vercel
 app.listen(3000, () => {
-  console.log('Server running on http://localhost:8080/');
+  console.log('Server running on http://localhost:3000/');
 });
