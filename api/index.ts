@@ -24,7 +24,7 @@ app.use(cors());
 // app.use(bodyParser.json());
 
 app.use(express.json());
-app.use('/api/v1/students', router);
+app.use('/api/v1/gamersshrine', router);
 
 // const server = http.createServer(app);
 
