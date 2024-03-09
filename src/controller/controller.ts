@@ -1,4 +1,4 @@
-import pool from './db/studentsdb';
+import pool from '../db/db';
 import { 
   addStudentQuery,
   checkStudentExistByEmailQuery,
@@ -6,7 +6,7 @@ import {
   getStudentsQuery,
   getStudentsQueryByID,
   updateStudentQuery,
-} from './queries';
+} from '../queries/queries';
 
 export const addStudent = (req: any, res: any) => {
   const { name, email, age, dob } = req.body;
@@ -41,7 +41,6 @@ export const getStudents = (req: any, res: any) => {
   pool.query(getStudentsQuery, (error, results) => {
     if (error) throw error;
     res.status(200).json(results.rows);
-    console.log("Student has been created!")
   });
 };
 
@@ -60,7 +59,7 @@ export const updateStudentById = (req: any, res: any) => {
   pool.query(getStudentsQueryByID, [id], (error, results) => {
     const studentNotFound = !results.rows.length;
     if (studentNotFound) {
-      res.send("Student does not exist in database, could not remove");
+      res.send("Student does not exist in database, could not update");
     };
     pool.query(updateStudentQuery, [name, email, age, dob, id], (error, results) => {
       if (error) throw error;
@@ -68,7 +67,6 @@ export const updateStudentById = (req: any, res: any) => {
     });
   });
 };
-
 
 export default [
   addStudent,
