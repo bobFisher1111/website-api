@@ -10,13 +10,13 @@ import {
 
 export const addBook = (req: any, res: any) => {
   const { 
-    bookId, bookTitle, bookSubtitle, buy, genre, publishedDate, bookCoverLarge, bookCoverSmall, authorid
+    bookId, bookTitle, bookSubtitle, buy, genre, publishedDate, bookCoverLarge, bookCoverSmall, authorId, isHidden
   } = req.body;
   pool.query(checkBookExistByBookNameQuery, [bookId], (error, results) => {
     if (results.rows.length) {
-      res.send("Book already exist");
+      return res.send("Book already exist");
     }
-    pool.query(addBookQuery, [bookId, bookTitle, bookSubtitle, buy, genre, publishedDate, bookCoverLarge, bookCoverSmall, authorid], (error, results) => {
+    pool.query(addBookQuery, [bookId, bookTitle, bookSubtitle, buy, genre, publishedDate, bookCoverLarge, bookCoverSmall, authorId, isHidden], (error, results) => {
       if (error) throw error;
       res.status(201).send("Book Created Successfully!");
     });
@@ -54,13 +54,13 @@ export const getBooksByID = (req: any, res: any) => {
 
 export const updateBookByID = (req: any, res: any) => {
   const bookId = parseInt(req.params.id);
-  const { bookTitle, bookSubtitle, buy, genre, publishedDate, bookCoverLarge, bookCoverSmall, authorid } = req.body;
+  const { bookTitle, bookSubtitle, buy, genre, publishedDate, bookCoverLarge, bookCoverSmall, authorId, isHidden } = req.body;
   pool.query(getBooksQueryByID, [bookId], (error, results) => {
     const authortNotFound = !results.rows.length;
     if (authortNotFound) {
       res.send("Book does not exist in database, could not remove");
     };
-    pool.query(updateBooksQuery, [bookId, bookTitle, bookSubtitle, buy, genre, publishedDate, bookCoverLarge, bookCoverSmall, authorid], (error, results) => {
+    pool.query(updateBooksQuery, [bookId, bookTitle, bookSubtitle, buy, genre, publishedDate, bookCoverLarge, bookCoverSmall, authorId, isHidden], (error, results) => {
       if (error) throw error;
       res.status(200).send("Book updated successfully");
     });

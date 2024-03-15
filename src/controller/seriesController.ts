@@ -10,13 +10,13 @@ import {
 
 export const addSeries = (req: any, res: any) => {
   const { 
-    seriesId, authorId, seriesTitle, seriesCoverImageOrVideo, seriesAuthors, useVideoInsteadOfImage, seriesType, seriesTypeTitle, seriesStartDate, sectionLink, section
+    seriesId, authorId, seriesTitle, seriesCoverImageOrVideo, seriesAuthors, useVideoInsteadOfImage, seriesType, seriesTypeTitle, seriesStartDate, sectionLink, section, isHidden
   } = req.body;
   pool.query(checkSeriesExistBySeriesNameQuery, [seriesId], (error, results) => {
     if (results.rows.length) {
-      res.send("Series already exist");
+      return res.send("Series already exist");
     }
-    pool.query(addSerieQuery, [seriesId, authorId, seriesTitle, seriesCoverImageOrVideo, seriesAuthors, useVideoInsteadOfImage, seriesType, seriesTypeTitle, seriesStartDate, sectionLink, section], (error, results) => {
+    pool.query(addSerieQuery, [seriesId, authorId, seriesTitle, seriesCoverImageOrVideo, seriesAuthors, useVideoInsteadOfImage, seriesType, seriesTypeTitle, seriesStartDate, sectionLink, section, isHidden], (error, results) => {
       if (error) throw error;
       res.status(201).send("Series Created Successfully!");
     });
@@ -28,7 +28,7 @@ export const deleteSeries = (req: any, res: any) => {
   pool.query(getSeriesQueryByID, [seriesId], (error, results) => {
     const seriesNotFound = !results.rows.length;
     if (seriesNotFound) {
-      res.send("Series does not exist in database, could not remove");
+      return res.send("Series does not exist in database, could not remove");
     };
     pool.query(deleteSeriesQuery, [seriesId], (error, results) => {
       if (error) throw error;
@@ -54,13 +54,13 @@ export const getSeriesByAuthorID = (req: any, res: any) => {
 
 export const updateSeriesBySeriesID = (req: any, res: any) => {
   const seriesId = parseInt(req.params.id);
-  const { authorId, seriesTitle, seriesCoverImageOrVideo, seriesAuthors, useVideoInsteadOfImage, seriesType, seriesTypeTitle, seriesStartDate, sectionLink, section } = req.body;
+  const { authorId, seriesTitle, seriesCoverImageOrVideo, seriesAuthors, useVideoInsteadOfImage, seriesType, seriesTypeTitle, seriesStartDate, sectionLink, section, isHidden } = req.body;
   pool.query(getSeriesQueryByID, [seriesId], (error, results) => {
     const seriesNotFound = !results.rows.length;
     if (seriesNotFound) {
-      res.send("Series does not exist in database, could not remove");
+      return res.send("Series does not exist in database, could not remove");
     };
-    pool.query(updateSeriesQuery, [seriesId, authorId, seriesTitle, seriesCoverImageOrVideo, seriesAuthors, useVideoInsteadOfImage, seriesType, seriesTypeTitle, seriesStartDate, sectionLink, section], (error, results) => {
+    pool.query(updateSeriesQuery, [seriesId, authorId, seriesTitle, seriesCoverImageOrVideo, seriesAuthors, useVideoInsteadOfImage, seriesType, seriesTypeTitle, seriesStartDate, sectionLink, section, isHidden], (error, results) => {
       if (error) throw error;
       res.status(200).send("Series updated successfully");
     });

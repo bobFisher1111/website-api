@@ -10,13 +10,13 @@ import {
 
 export const addArtical = (req: any, res: any) => {
   const { 
-    articalId, authorid, seriesId, sections, sectionLink, sectionType, articalTitle, articalSubTitle, publishedDate, numberOfFavorites, series, seriesChapter, seriesType, useVideoInsteadOfImage, coverImageOrVideo, artical
+    articalId, authorId, seriesId, sections, sectionLink, sectionType, articalTitle, articalSubTitle, publishedDate, numberOfFavorites, series, seriesChapter, seriesType, useVideoInsteadOfImage, coverImageOrVideo, artical, isHidden
   } = req.body;
   pool.query(checArticalExistByIDQuery, [articalId], (error, results) => {
     if (results.rows.length) {
-      res.send("Artical already exist");
+      return res.send("Artical already exist");
     }
-    pool.query(addArticalQuery, [articalId, authorid, seriesId, sections, sectionLink, sectionType, articalTitle, articalSubTitle, publishedDate, numberOfFavorites, series, seriesChapter, seriesType, useVideoInsteadOfImage, coverImageOrVideo, artical], (error, results) => {
+    pool.query(addArticalQuery, [articalId, authorId, seriesId, sections, sectionLink, sectionType, articalTitle, articalSubTitle, publishedDate, numberOfFavorites, series, seriesChapter, seriesType, useVideoInsteadOfImage, coverImageOrVideo, artical, isHidden], (error, results) => {
       if (error) throw error;
       res.status(201).send("Artical Created Successfully!");
     });
@@ -29,7 +29,7 @@ export const deleteArtical = (req: any, res: any) => {
   pool.query(getArticalQueryByID, [articalId], (error, results) => {
     const articalNotFound = !results.rows.length;
     if (articalNotFound) {
-      res.send("Artical does not exist in database, could not remove");
+      return res.send("Artical does not exist in database, could not remove");
     };
     pool.query(deleteArticalQuery, [articalId], (error, results) => {
       if (error) throw error;
@@ -55,13 +55,13 @@ export const getArticalByID = (req: any, res: any) => {
 
 export const updateArticalByID = (req: any, res: any) => {
   const articalId = parseInt(req.params.id);
-  const { authorid, seriesId, sections, sectionLink, sectionType, articalTitle, articalSubTitle, publishedDate, numberOfFavorites, series, seriesChapter, seriesType, useVideoInsteadOfImage, coverImageOrVideo, artical } = req.body;
+  const { authorId, seriesId, sections, sectionLink, sectionType, articalTitle, articalSubTitle, publishedDate, numberOfFavorites, series, seriesChapter, seriesType, useVideoInsteadOfImage, coverImageOrVideo, artical, isHidden } = req.body;
   pool.query(getArticalQueryByID, [articalId], (error, results) => {
     const articalNotFound = !results.rows.length;
     if (articalNotFound) {
-      res.send("Artical does not exist in database, could not remove");
+      return res.send("Artical does not exist in database, could not remove");
     };
-    pool.query(updateArticalQuery, [articalId, authorid, seriesId, sections, sectionLink, sectionType, articalTitle, articalSubTitle, publishedDate, numberOfFavorites, series, seriesChapter, seriesType, useVideoInsteadOfImage, coverImageOrVideo, artical], (error, results) => {
+    pool.query(updateArticalQuery, [articalId, authorId, seriesId, sections, sectionLink, sectionType, articalTitle, articalSubTitle, publishedDate, numberOfFavorites, series, seriesChapter, seriesType, useVideoInsteadOfImage, coverImageOrVideo, artical, isHidden], (error, results) => {
       if (error) throw error;
       res.status(200).send("Artical updated successfully");
     });
