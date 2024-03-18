@@ -2,6 +2,7 @@ import pool from '../db/db';
 import {
   addBookQuery,
   checkBookExistByBookNameQuery,
+  checkBookExistByIDQuery,
   deleteBooksQuery,
   getBooksQuery,
   getBooksQueryByID,
@@ -12,13 +13,18 @@ export const addBook = (req: any, res: any) => {
   const { 
     bookId, bookTitle, bookSubtitle, buy, genre, publishedDate, bookCoverLarge, bookCoverSmall, authorId, isHidden
   } = req.body;
-  pool.query(checkBookExistByBookNameQuery, [bookId], (error, results) => {
+  pool.query(checkBookExistByBookNameQuery, [bookTitle], (error, results) => {
     if (results.rows.length) {
-      return res.send("Book already exist");
+      return res.send("Book name already exist");
     }
+    pool.query(checkBookExistByIDQuery, [bookId], (error, results) => {
+      if(results.rows.length) {
+        return res.send("Article id already exist");
+      };
+    });
     pool.query(addBookQuery, [bookId, bookTitle, bookSubtitle, buy, genre, publishedDate, bookCoverLarge, bookCoverSmall, authorId, isHidden], (error, results) => {
       if (error) throw error;
-      res.status(201).send("Book Created Successfully!");
+      return res.status(201).send("Book Created Successfully!");
     });
   });
 };
@@ -28,11 +34,11 @@ export const deleteBook = (req: any, res: any) => {
   pool.query(getBooksQueryByID, [bookId], (error, results) => {
     const bookNotFound = !results.rows.length;
     if (bookNotFound) {
-      res.send("Book does not exist in database, could not remove");
+      return res.send("Book does not exist in database, could not remove");
     };
     pool.query(deleteBooksQuery, [bookId], (error, results) => {
       if (error) throw error;
-      res.status(200).send("Book removed successfully!");
+      return res.status(200).send("Book removed successfully!");
     })
   });
 };
@@ -40,7 +46,7 @@ export const deleteBook = (req: any, res: any) => {
 export const getBooks = (req: any, res: any) => {
   pool.query(getBooksQuery, (error, results) => {
     if (error) throw error;
-    res.status(200).json(results.rows);
+    return res.status(200).json(results.rows);
   });
 };
 
@@ -48,7 +54,7 @@ export const getBooksByID = (req: any, res: any) => {
   const bookId = parseInt(req.params.id);
   pool.query(getBooksQueryByID, [bookId], (error, results) => {
     if (error) throw error;
-    res.status(200).json(results.rows);
+    return res.status(200).json(results.rows);
   });
 };
 
@@ -58,11 +64,11 @@ export const updateBookByID = (req: any, res: any) => {
   pool.query(getBooksQueryByID, [bookId], (error, results) => {
     const authortNotFound = !results.rows.length;
     if (authortNotFound) {
-      res.send("Book does not exist in database, could not remove");
+      return res.send("Book does not exist in database, could not remove");
     };
     pool.query(updateBooksQuery, [bookId, bookTitle, bookSubtitle, buy, genre, publishedDate, bookCoverLarge, bookCoverSmall, authorId, isHidden], (error, results) => {
       if (error) throw error;
-      res.status(200).send("Book updated successfully");
+      return res.status(200).send("Book updated successfully");
     });
   });
 };

@@ -1,7 +1,8 @@
 import pool from '../db/db';
 import {
   addAuthorQuery,
-  checkStudentExistByAuthorsNameQuery,
+  checkAuthorIDExistQuery,
+  checkAuthorExistByAuthorsNameQuery,
   deleteAuthorQuery,
   getAuthorsQuery,
   getAuthorQueryByID,
@@ -14,13 +15,19 @@ export const addAuthor = (req: any, res: any) => {
     authorId, authorName, avatarImage, biography, titles, facebook, twitter, youtube, email, about, isHidden
   } = req.body;
   // check if email is valid and not already in database
-  pool.query(checkStudentExistByAuthorsNameQuery, [authorName], (error, results) => {
+  pool.query(checkAuthorExistByAuthorsNameQuery, [authorName], (error, results) => {
     if (results.rows.length) {
-    }
+      return res.send('Athors name already exist');
+    };
+    pool.query(checkAuthorIDExistQuery, [authorId], (error, results) => {
+      if(results.rows.length) {
+        return res.send("Athors id already exist");
+      };
+    });
     // add student to db
     pool.query(addAuthorQuery, [authorId, authorName, avatarImage, biography, titles, facebook, twitter, youtube, email, about, isHidden], (error, results) => {
       if (error) throw error;
-      res.status(201).send("Author Created Successfully!");
+      return res.status(201).send("Author Created Successfully!");
     });
   });
 };
@@ -34,7 +41,7 @@ export const deleteAuthor = (req: any, res: any) => {
     };
     pool.query(deleteAuthorQuery, [authorId], (error, results) => {
       if (error) throw error;
-      res.status(200).send("Author removed successfully!");
+      return res.status(200).send("Author removed successfully!");
     })
   });
 };
@@ -42,16 +49,15 @@ export const deleteAuthor = (req: any, res: any) => {
 export const getAuthors = (req: any, res: any) => {
   pool.query(getAuthorsQuery, (error, results) => {
     if (error) throw error;
-    res.status(200).json(results.rows);
+    return res.status(200).json(results.rows);
   });
 };
 
 export const getAuthorByAuthorID = (req: any, res: any) => {
   const authorId = parseInt(req.params.id);
-  // passing in: query, params, callback
   pool.query(getAuthorQueryByID, [authorId], (error, results) => {
     if (error) throw error;
-    res.status(200).json(results.rows);
+    return res.status(200).json(results.rows);
   });
 };
 
@@ -65,7 +71,7 @@ export const updateAuthorByAuthorID = (req: any, res: any) => {
     };
     pool.query(updateAuthorQuery, [authorId, authorName, avatarImage, biography, titles, facebook, twitter, youtube, email, about, isHidden], (error, results) => {
       if (error) throw error;
-      res.status(200).send("Author updated successfully");
+      return res.status(200).send("Author updated successfully");
     });
   });
 }

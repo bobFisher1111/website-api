@@ -1,5 +1,6 @@
 export const addArticalQuery = `INSERT INTO Articals ("articalId", "authorId", "seriesId", "sections", "sectionLink", "sectionType", "articalTitle", "articalSubTitle", "publishedDate", "numberOfFavorites", "series", "seriesChapter", "seriesType", "useVideoInsteadOfImage", "coverImageOrVideo", "artical", "isHidden") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)`;
-export const checArticalExistByIDQuery = `SELECT "articalId" FROM Articals WHERE "articalId" = $1`;
+export const checkArticalExistByIDQuery = `SELECT "articalId" FROM Articals WHERE "articalId" = $1`;
+export const checkArticalNameExistByIDQuery = `SELECT "articalTitle" FROM Articals WHERE "articalTitle" = $1`;
 export const deleteArticalQuery = `DELETE FROM Articals WHERE "articalId" = $1`;
 export const getArticalQuery = "SELECT * FROM Articals";
 export const getArticalQueryByID = `SELECT * FROM Articals WHERE "articalId" = $1`;
@@ -7,7 +8,8 @@ export const updateArticalQuery = `UPDATE Articals SET "articalId" = $1, "author
 
 export default [
   addArticalQuery,
-  checArticalExistByIDQuery,
+  checkArticalExistByIDQuery,
+  checkArticalNameExistByIDQuery,
   deleteArticalQuery,
   getArticalQuery,
   getArticalQueryByID,

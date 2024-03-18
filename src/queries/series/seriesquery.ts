@@ -1,5 +1,6 @@
 export const addSerieQuery = `INSERT INTO Series ("seriesId", "authorId", "seriesTitle", "seriesCoverImageOrVideo", "seriesAuthors", "useVideoInsteadOfImage", "seriesType", "seriesTypeTitle", "seriesStartDate", "sectionLink", "section", "isHidden") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)`;
-export const checkSeriesExistBySeriesNameQuery = `SELECT "seriesId" FROM Series WHERE "seriesId" = $1`;
+export const checkSeriesExistByIDQuery = `SELECT "seriesId" FROM Series WHERE "seriesId" = $1`;
+export const checkSeriesExistBySeriesNameQuery = `SELECT "seriesTitle" FROM Series WHERE "seriesTitle" = $1`;
 export const deleteSeriesQuery = `DELETE FROM Series WHERE "seriesId" = $1`;
 export const getSeriesQuery = "SELECT * FROM Series";
 export const getSeriesQueryByID = `SELECT * FROM Series WHERE "seriesId" = $1`;
@@ -7,6 +8,7 @@ export const updateSeriesQuery = `UPDATE Series SET "seriesId" = $1, "authorId" 
 
 export default [
   addSerieQuery,
+  checkSeriesExistByIDQuery,
   checkSeriesExistBySeriesNameQuery,
   deleteSeriesQuery,
   getSeriesQuery,

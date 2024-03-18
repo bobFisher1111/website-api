@@ -1,7 +1,8 @@
 import pool from '../db/db';
 import {
   addArticalQuery,
-  checArticalExistByIDQuery,
+  checkArticalExistByIDQuery,
+  checkArticalNameExistByIDQuery,
   deleteArticalQuery,
   getArticalQuery,
   getArticalQueryByID,
@@ -12,13 +13,18 @@ export const addArtical = (req: any, res: any) => {
   const { 
     articalId, authorId, seriesId, sections, sectionLink, sectionType, articalTitle, articalSubTitle, publishedDate, numberOfFavorites, series, seriesChapter, seriesType, useVideoInsteadOfImage, coverImageOrVideo, artical, isHidden
   } = req.body;
-  pool.query(checArticalExistByIDQuery, [articalId], (error, results) => {
+  pool.query(checkArticalNameExistByIDQuery, [articalTitle], (error, results) => {
     if (results.rows.length) {
-      return res.send("Artical already exist");
-    }
+      return res.send("Article name already exist");
+    };
+    pool.query(checkArticalExistByIDQuery, [articalId], (error, results) => {
+      if(results.rows.length) {
+        return res.send("Article id already exist");
+      };
+    });
     pool.query(addArticalQuery, [articalId, authorId, seriesId, sections, sectionLink, sectionType, articalTitle, articalSubTitle, publishedDate, numberOfFavorites, series, seriesChapter, seriesType, useVideoInsteadOfImage, coverImageOrVideo, artical, isHidden], (error, results) => {
       if (error) throw error;
-      res.status(201).send("Artical Created Successfully!");
+      return res.status(201).send("Article Created Successfully!");
     });
   });
 };
@@ -29,11 +35,11 @@ export const deleteArtical = (req: any, res: any) => {
   pool.query(getArticalQueryByID, [articalId], (error, results) => {
     const articalNotFound = !results.rows.length;
     if (articalNotFound) {
-      return res.send("Artical does not exist in database, could not remove");
+      return res.send("Article does not exist in database, could not remove");
     };
     pool.query(deleteArticalQuery, [articalId], (error, results) => {
       if (error) throw error;
-      res.status(200).send("Artical removed successfully!");
+      return res.status(200).send("Article removed successfully!");
     })
   });
 };
@@ -41,7 +47,7 @@ export const deleteArtical = (req: any, res: any) => {
 export const getArticals = (req: any, res: any) => {
   pool.query(getArticalQuery, (error, results) => {
     if (error) throw error;
-    res.status(200).json(results.rows);
+    return res.status(200).json(results.rows);
   });
 };
 
@@ -49,7 +55,7 @@ export const getArticalByID = (req: any, res: any) => {
   const articalId = parseInt(req.params.id);
   pool.query(getArticalQueryByID, [articalId], (error, results) => {
     if (error) throw error;
-    res.status(200).json(results.rows);
+    return res.status(200).json(results.rows);
   });
 };
 
@@ -59,11 +65,11 @@ export const updateArticalByID = (req: any, res: any) => {
   pool.query(getArticalQueryByID, [articalId], (error, results) => {
     const articalNotFound = !results.rows.length;
     if (articalNotFound) {
-      return res.send("Artical does not exist in database, could not remove");
+      return res.send("Article does not exist in database, could not remove");
     };
     pool.query(updateArticalQuery, [articalId, authorId, seriesId, sections, sectionLink, sectionType, articalTitle, articalSubTitle, publishedDate, numberOfFavorites, series, seriesChapter, seriesType, useVideoInsteadOfImage, coverImageOrVideo, artical, isHidden], (error, results) => {
       if (error) throw error;
-      res.status(200).send("Artical updated successfully");
+      return res.status(200).send("Article updated successfully");
     });
   });
 };

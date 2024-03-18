@@ -1,5 +1,6 @@
 export const addAuthorQuery = `INSERT INTO Authors ("authorId", "authorName", "avatarImage", biography, titles, facebook, twitter, youtube, email, about, "isHidden") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)`
-export const checkStudentExistByAuthorsNameQuery = `SELECT "authorName" FROM Authors WHERE "authorName" = $1`;
+export const checkAuthorExistByAuthorsNameQuery = `SELECT "authorName" FROM Authors WHERE "authorName" = $1`;
+export const checkAuthorIDExistQuery = `SELECT "authorId" FROM Authors WHERE "authorId" = $1`;
 export const deleteAuthorQuery = `DELETE FROM Authors WHERE "authorId" = $1`;
 export const getAuthorsQuery = "SELECT * FROM Authors";
 export const getAuthorQueryByID = `SELECT * FROM Authors WHERE "authorId" = $1`;
@@ -7,7 +8,8 @@ export const updateAuthorQuery = `UPDATE Authors SET "authorId" = $1, "authorNam
 
 export default [
   addAuthorQuery,
-  checkStudentExistByAuthorsNameQuery,
+  checkAuthorIDExistQuery,
+  checkAuthorExistByAuthorsNameQuery,
   deleteAuthorQuery,
   getAuthorsQuery,
   getAuthorQueryByID,

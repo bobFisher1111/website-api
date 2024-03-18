@@ -1,5 +1,6 @@
 export const addBookQuery = `INSERT INTO Books ("bookId", "bookTitle", "bookSubtitle", buy, genre, "publishedDate", "bookCoverLarge", "bookCoverSmall", "authorId", "isHidden") VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)`;
-export const checkBookExistByBookNameQuery = `SELECT "bookId" FROM Books WHERE "bookId" = $1`;
+export const checkBookExistByBookNameQuery = `SELECT "bookTitle" FROM Books WHERE "bookTitle" = $1`;
+export const checkBookExistByIDQuery = `SELECT "bookId" FROM Books WHERE "bookId" = $1`;
 export const deleteBooksQuery = `DELETE FROM Books WHERE "bookId" = $1`;
 export const getBooksQuery = "SELECT * FROM Books";
 export const getBooksQueryByID = `SELECT * FROM Books WHERE "bookId" = $1`;
@@ -8,6 +9,7 @@ export const updateBooksQuery = `UPDATE Books SET "bookId" = $1, "bookTitle" = $
 export default [
   addBookQuery,
   checkBookExistByBookNameQuery,
+  checkBookExistByIDQuery,
   deleteBooksQuery,
   getBooksQuery,
   getBooksQueryByID,
