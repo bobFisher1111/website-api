@@ -1,11 +1,11 @@
 import { Router } from 'express';
 import {
-  addArtical,
-  deleteArtical,
-  getArticals,
-  getArticalByID,
-  updateArticalByID,
-} from '../controller/articalsController';
+  addArticle,
+  deleteArticle,
+  getArticles,
+  getArticleByID,
+  updateArticleByID,
+} from '../controller/articlesController';
 import {
   addAuthor,
   deleteAuthor,
@@ -67,12 +67,12 @@ router.get('/books', getBooks);
 router.get('/get_book_by_id/:id', getBooksByID);
 router.put('/update_book_by_bookiD/:id', updateBookByID);
 
-// Articals:
-router.post('/add_artical', addArtical);
-router.delete('/delete_artical/:id', deleteArtical);
-router.get('/articals', getArticals);
-router.get('/get_artical_by_id/:id', getArticalByID);
-router.put('/update_artical/:id', updateArticalByID);
+// Articles:
+router.post('/add_article', addArticle);
+router.delete('/delete_article/:id', deleteArticle);
+router.get('/articles', getArticles);
+router.get('/get_article_by_id/:id', getArticleByID);
+router.put('/update_article/:id', updateArticleByID);
 
 // website data:
 router.get('/website_data', getWebsiteData);

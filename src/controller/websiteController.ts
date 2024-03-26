@@ -1,7 +1,7 @@
 import pool from '../db/db';
 import {
-  getArticalQuery,
-} from '../queries/articals/articalsquery';
+  getArticlesQuery,
+} from '../queries/articles/articlesquery';
 import {
   getAuthorsQuery,
 } from '../queries/authors/authorsquery';
@@ -14,12 +14,12 @@ import {
 
 export const getWebsiteData = async(req: any, res: any) => {
   try {
-    const articals = await pool.query(getArticalQuery);
+    const articles = await pool.query(getArticlesQuery);
     const authors = await pool.query(getAuthorsQuery);
     const books = await pool.query(getBooksQuery);
     const series = await pool.query(getSeriesQuery);
     const data: any = { 'websiteData':  {
-        'articals': articals.rows,
+        'articles': articles.rows,
         'authors': authors.rows,
         'books': books.rows,
         'series': series.rows,
