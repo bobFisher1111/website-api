@@ -11,5 +11,5 @@ CREATE TABLE Series (
   "authorId" int NOT NULL,
 	"sectionLink" varchar(255) NOT NULL,
   "isHidden"boolean NOT NULL,
-  FOREIGN KEY("authorId") REFERENCES Authors("authorId"),
+  FOREIGN KEY("authorId") REFERENCES Authors("authorId")
 );

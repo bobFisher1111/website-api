@@ -1,7 +1,7 @@
 CREATE TABLE Articles (
 	"articleId" int NOT NULL PRIMARY KEY,
 	"authorId" int NOT NULL,
-	"seriesId"int NOT NULL,
+	"seriesId" int,
   "sections" varchar(255) NOT NULL,
   "sectionLink" varchar(255) NOT NULL,
   "sectionType" varchar(255) NOT NULL,
