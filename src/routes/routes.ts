@@ -36,6 +36,7 @@ import {
 } from '../controller/seriesController';
 import {
   getWebsiteData,
+  getWebsiteDataBuildJSON,
 } from '../controller/websiteController'
 
 const router = Router();
@@ -76,5 +77,7 @@ router.put('/update_article/:id', updateArticleByID);
 
 // website data:
 router.get('/website_data', getWebsiteData);
+// router.get('/website_data', getWebsiteData); // used later if compute time has an issue with vercel save as a json file
+// router.get('/website_build_json_data', getWebsiteDataBuildJSON);
 
 export default router;
