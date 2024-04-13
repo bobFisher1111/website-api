@@ -11,7 +11,6 @@ import {
 import {
   getSeriesQuery,
 } from '../queries/series/seriesquery';
-const staticData = require('../staticData/staticData.json');
 
 export const getWebsiteData = async(req: any, res: any) => {
   try {
@@ -48,7 +47,6 @@ export const getWebsiteDataBuildJSON = async(req: any, res: any) => {
       }
     };
     return res.json(data);
-    // return res.json(staticData);
   } catch (error) {
     throw error
   }
@@ -56,5 +54,4 @@ export const getWebsiteDataBuildJSON = async(req: any, res: any) => {
 
 export default [
   getWebsiteData,
-  getWebsiteDataBuildJSON,
 ];
